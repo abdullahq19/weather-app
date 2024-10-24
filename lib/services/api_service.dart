@@ -18,13 +18,19 @@ abstract class APIService {
 }
 
 class WeatherAPIService extends APIService {
+
+  WeatherAPIService._();
+  static WeatherAPIService? _instance;
+
+  factory WeatherAPIService() => _instance ??= WeatherAPIService._();
+
   static const apiKey = '56852fc96e959df02b805e1080dcd3e2';
 
   @override
   String get apiUrl => '/data/2.5/weather?q=';
 
   Future<OpenWeatherModel> fetchWeather(String city) async {
-    String endPoint = '$city&appid=$apiKey&unitxs=metric';
+    String endPoint = '$city&appid=$apiKey&units=metric';
     Map<String, dynamic> map = await fetch(endPoint);
     return OpenWeatherModel.fromMap(map);
   }
